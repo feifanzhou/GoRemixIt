@@ -4,6 +4,7 @@ router = express.Router()
 config = require('./config')
 
 spotify = require('./spotify')
+soundcloud = require('./soundcloud')
 
 # ==============================
 # Set up routes
@@ -16,6 +17,9 @@ router
 router
   .route('/search')
   .get spotify.search
+router
+  .route('/soundcloud')
+  .get soundcloud.search
 
 # ==============================
 # Start server
