@@ -1,0 +1,14 @@
+{
+  "name": "goremixit",
+  "version": "0.0.1",
+  "description": "Song + remixes",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feifanzhou/GoRemixIt"
+  },
+  "author": "Feifan Zhou",
+  "dependencies": {
+    "express": "4.9.7"
+  }
+}
