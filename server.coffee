@@ -11,7 +11,7 @@ search = require('./search')
 router
   .route('/')
   .get (req, res) -> 
-    res.json message: 'Welcome'
+    res.render('index')
     return
 
 router
@@ -23,5 +23,7 @@ router
 app
   .use('/', router)
   .use(response_time())
+  .set('views', './views')
+  .set('view engine', 'ejs')
   .listen(config.port)
 console.log('Started')

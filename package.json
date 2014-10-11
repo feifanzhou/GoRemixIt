@@ -2,13 +2,14 @@
   "name": "goremixit",
   "version": "0.0.1",
   "description": "Song + remixes",
-  "main": "index.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/feifanzhou/GoRemixIt"
   },
   "author": "Feifan Zhou",
   "dependencies": {
+    "ejs": "^1.0.0",
     "express": "4.9.7",
     "response-time": "2.2.0",
     "soundcloud-node": "0.0.8"
