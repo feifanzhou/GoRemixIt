@@ -1,5 +1,7 @@
 https = require('https')
 
+VARS = require('./vars')
+
 spotifyResults = []
 soundcloudResults = []
 
@@ -16,7 +18,7 @@ respond = (res) ->
   return
 
 module.exports.search = (req, res) ->
-  path = 'https://api.soundcloud.com/tracks.json?client_id=621df22484a042a1d52a8f74513c2842&q=' + req.query.q
+  path = 'https://api.soundcloud.com/tracks.json?client_id=' + VARS.soundcloud_client_id + '&q=' + req.query.q
   searchReq = https.get(path, (searchRes) ->
     # FIXME — Handle various status codes
     console.log('STATUS: ' + searchRes.statusCode)

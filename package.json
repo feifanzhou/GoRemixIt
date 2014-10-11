@@ -9,9 +9,9 @@
   },
   "author": "Feifan Zhou",
   "dependencies": {
+    "coffee-middleware": "0.2.1",
     "ejs": "^1.0.0",
     "express": "4.9.7",
-    "response-time": "2.2.0",
-    "soundcloud-node": "0.0.8"
+    "response-time": "2.2.0"
   }
 }
