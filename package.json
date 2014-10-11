@@ -10,6 +10,7 @@
   "author": "Feifan Zhou",
   "dependencies": {
     "express": "4.9.7",
+    "response-time": "2.2.0",
     "soundcloud-node": "0.0.8"
   }
 }

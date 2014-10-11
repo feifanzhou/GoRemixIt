@@ -1,10 +1,10 @@
 express = require('express')
 app = express()
 router = express.Router()
+response_time = require('response-time')
 config = require('./config')
 
-spotify = require('./spotify')
-soundcloud = require('./soundcloud')
+search = require('./search')
 
 # ==============================
 # Set up routes
@@ -16,14 +16,12 @@ router
 
 router
   .route('/search')
-  .get spotify.search
-router
-  .route('/soundcloud')
-  .get soundcloud.search
+  .get search.search
 
 # ==============================
 # Start server
 app
   .use('/', router)
+  .use(response_time())
   .listen(config.port)
 console.log('Started')
