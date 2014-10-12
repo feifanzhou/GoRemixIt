@@ -13,7 +13,41 @@ $xlg: 'min-width: 1600px';
 $media-xlg: 'only screen and (min-width: 1600px)';
 #content {
   background: black;
+  font-family: 'Lato', sans-serif;
+  #navbar {
+    background: transparentize(black, 0.1);
+    color: white;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    section {
+      display: inline-block;
+      @media #{$media-xxs} {
+        font-size: 1.5em;
+        padding: 0.5em;
+        .HeaderBody {
+          display: none;
+        }
+      }
+      @media #{$media-sm} {
+        padding: 0.5em 1em;
+        .HeaderBody {
+          display: inline-block;
+          font-size: 1em;
+          margin-left: 0.35em;
+        }
+      }
+    }
+  }
   #coverGrid {
+    @media #{$media-xxs} {
+      // Offset for nav bar at top
+      margin-top: 53px;
+    }
+    @media #{$media-sm} {
+      margin-top: 85px;
+    }
     .Cover {
       display: inline-block;
       @media #{$media-xxs} {

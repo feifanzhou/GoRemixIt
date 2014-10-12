@@ -28,7 +28,6 @@ router
 # ==============================
 # Start server
 app
-  .use(express.static(__dirname + '/public'))
   .use('/', router)
   .use(response_time())
   .use(coffeeMiddleware({
@@ -41,6 +40,7 @@ app
     debug: true
     outputStyle: 'nested'
   }))
+  .use(express.static(__dirname + '/public'))
   .set('views', './views')
   .set('view engine', 'ejs')
   .listen(config.port)

@@ -1,4 +1,32 @@
-Homepage = React.createClass({
+Navbar = React.createClass({
+  render: ->
+    React.DOM.header
+      id: 'navbar'
+      children: [
+        React.DOM.section
+          id: 'headerLogo'
+          children: [
+            React.DOM.i
+              className: 'fa fa-plus HeaderIcon'
+            React.DOM.h1
+              className: 'HeaderBody'
+              children: 'Remixes'
+          ]
+        React.DOM.section
+          id: 'headerSearch'
+          children: [
+            React.DOM.i
+              className: 'fa fa-search HeaderIcon'
+            React.DOM.h1
+              className: 'HeaderBody'
+              children: 'Search'
+          ]
+        React.DOM.section
+          id: 'headerPlayback'
+          children: 'Playback'
+      ]
+})
+Grid = React.createClass({
   getInitialState: ->
     return { covers: [] }
   componentWillMount: ->
@@ -16,5 +44,13 @@ Homepage = React.createClass({
     React.DOM.div
       id: 'coverGrid'
       children: coverGrid
+})
+Homepage = React.createClass({
+  render: ->
+    React.DOM.div
+      children: [
+        Navbar()
+        Grid()
+      ]
 })
 React.renderComponent(Homepage(), document.getElementById('content'))
