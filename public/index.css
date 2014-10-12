@@ -1,0 +1,22 @@
+#content {
+  background: black; }
+  #content #coverGrid .Cover {
+    display: inline-block; }
+    @media only screen and (min-width: 320px) {
+      #content #coverGrid .Cover {
+        width: 50%; } }
+    @media only screen and (min-width: 768px) {
+      #content #coverGrid .Cover {
+        width: 33.33333%; } }
+    @media only screen and (min-width: 992px) {
+      #content #coverGrid .Cover {
+        width: 20%; } }
+    @media only screen and (min-width: 1200px) {
+      #content #coverGrid .Cover {
+        width: 16.66667%; } }
+    @media only screen and (min-width: 1600px) {
+      #content #coverGrid .Cover {
+        width: 12.5%; } }
+    #content #coverGrid .Cover .CoverImage {
+      height: auto;
+      width: 100%; }
