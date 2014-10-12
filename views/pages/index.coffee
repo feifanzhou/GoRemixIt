@@ -23,7 +23,24 @@ Navbar = React.createClass({
           ]
         React.DOM.section
           id: 'headerPlayback'
-          children: 'Playback'
+          children: [
+            React.DOM.section
+              id: 'playbackControls'
+              children: [
+                React.DOM.i
+                  className: 'fa fa-backward PlaybackControl'
+                  id: 'playerBack'
+                React.DOM.i
+                  className: 'fa fa-play PlaybackControl'
+                  id: 'playerPlay'
+                React.DOM.i
+                  className: 'fa fa-pause PlaybackControl'
+                  id: 'playerPause'
+                React.DOM.i
+                  className: 'fa fa-forward PlaybackControl'
+                  id: 'playerForward'
+              ]
+          ]
       ]
 })
 Grid = React.createClass({
