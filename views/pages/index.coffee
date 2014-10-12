@@ -14,13 +14,17 @@ Navbar = React.createClass({
           ]
         React.DOM.section
           id: 'headerSearch'
-          children: [
-            React.DOM.i
-              className: 'fa fa-search HeaderIcon'
-            React.DOM.h1
-              className: 'HeaderBody'
-              children: 'Search'
-          ]
+          children: 
+            React.DOM.button
+              className: 'InvisibleButton'
+              onClick: @props.startSearch
+              children: [
+                React.DOM.i
+                  className: 'fa fa-search HeaderIcon'
+                React.DOM.h1
+                  className: 'HeaderBody'
+                  children: 'Search'
+              ]
         React.DOM.section
           id: 'headerPlayback'
           children: [
@@ -72,21 +76,27 @@ Grid = React.createClass({
       @setState({ tracks: resp })).bind(this)
   componentDidMount: ->
     setTimeout((->
+      console.log('Showing track details')
       $('.TrackDetails').css('bottom', '0px')
-    ), 750)
+    ), 900)
   render: ->
     coverGrid = @state.tracks.map((track) -> GridBox({ track: track })
     )
     React.DOM.div
+      className: if @props.isSearching then 'Searching' else ''
       id: 'coverGrid'
       children: coverGrid
 })
 Homepage = React.createClass({
+  getInitialState: ->
+    { isSearching: false }
+  startSearch: ->
+    @setState({ isSearching: true })
   render: ->
     React.DOM.div
       children: [
-        Navbar()
-        Grid()
+        Navbar({ startSearch: @startSearch })
+        Grid({ isSearching: @state.isSearching })
       ]
 })
 React.renderComponent(Homepage(), document.getElementById('content'))
