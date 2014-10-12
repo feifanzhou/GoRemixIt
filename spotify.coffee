@@ -13,9 +13,15 @@ module.exports.topTracks = (req, res) ->
       body = Buffer.concat(bodyChunks)
       data = JSON.parse(body)
       tracks = data.tracks
-      artwork = tracks.map((track) -> return track.artwork_url)
+      trackData = tracks.map((track) -> 
+        return {
+          artwork: track.artwork_url
+          name: track.track_name
+          artist: track.artist_name
+        }
+      )
       res.setHeader('Content-Type', 'application/json')
-      res.end(JSON.stringify(artwork))
+      res.end(JSON.stringify(trackData))
     )
   ).on('error', (e) ->
     res.json message: 'Error: ' + e.message

@@ -43,20 +43,39 @@ Navbar = React.createClass({
           ]
       ]
 })
+
+GridBox = React.createClass({
+  render: ->
+    React.DOM.div
+      className: 'Cover'
+      children: [
+        React.DOM.img
+          className: 'CoverImage'
+          src: @props.track.artwork
+        React.DOM.p
+          className: 'TrackDetails'
+          children: [
+            React.DOM.span
+              className: 'TrackName'
+              children: @props.track.name
+            React.DOM.span
+              className: 'TrackArtist'
+              children: @props.track.artist
+          ]
+      ]
+})
 Grid = React.createClass({
   getInitialState: ->
-    return { covers: [] }
+    return { tracks: [] }
   componentWillMount: ->
     $.get '/spotify/top_tracks', ((resp) ->
-      @setState({ covers: resp })).bind(this)
+      @setState({ tracks: resp })).bind(this)
+  componentDidMount: ->
+    setTimeout((->
+      $('.TrackDetails').css('bottom', '0px')
+    ), 750)
   render: ->
-    coverGrid = @state.covers.map((cover) ->
-      React.DOM.div
-        className: 'Cover'
-        children:
-          React.DOM.img
-            className: 'CoverImage'
-            src: cover
+    coverGrid = @state.tracks.map((track) -> GridBox({ track: track })
     )
     React.DOM.div
       id: 'coverGrid'

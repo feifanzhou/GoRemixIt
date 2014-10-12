@@ -22,6 +22,7 @@ $media-xlg: 'only screen and (min-width: 1600px)';
     position: fixed;
     right: 0;
     top: 0;
+    z-index: 100;
     > section {
       display: inline-block;
       float: left;
@@ -79,6 +80,8 @@ $media-xlg: 'only screen and (min-width: 1600px)';
     }
     .Cover {
       display: inline-block;
+      overflow: hidden;
+      position: relative;
       @media #{$media-xxs} {
         width: 50%;
       }
@@ -96,7 +99,40 @@ $media-xlg: 'only screen and (min-width: 1600px)';
       }
       .CoverImage {
         height: auto;
+        opacity: 0.8;
+        transition: opacity 0.6s;
         width: 100%;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .TrackDetails {
+        bottom: -100px;
+        color: white;
+        left: 0;
+        margin: 0;
+        padding: 0.5em;
+        position: absolute;
+        right: 0;
+        transition: bottom 1.5s;
+        @media #{$media-xxs} {
+          background: transparentize(black, 0.35);
+          font-size: 0.8em;
+          > span {
+            display: block;
+            white-space: nowrap;
+            &.TrackArtist {
+              margin-left: 0;
+            }
+          }
+        }
+        @media #{$media-md} {
+          font-size: 1em;
+        }
+        .TrackArtist {
+          color: transparentize(white, 0.25);
+          font-weight: 300;
+        }
       }
     }
   }
