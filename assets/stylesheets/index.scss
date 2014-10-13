@@ -96,8 +96,8 @@ html, body {
     @media #{$media-sm} {
       margin-top: 85px;
     }
-    transition: opacity 0.5s;
-    -webkit-transition: "opacity 0.5s, -webkit-filter 500ms linear";
+    transition: opacity 0.6s ease-in-out;
+    -webkit-transition: "opacity 0.6s ease-in-out, -webkit-filter 600ms ease-in-out";
     &.Searching {
       -webkit-filter: blur(5px);
       -moz-filter: blur(5px);
@@ -161,6 +161,27 @@ html, body {
           color: transparentize(white, 0.25);
           font-weight: 300;
         }
+      }
+    }
+  }
+  #searchView {
+    color: white;
+    left: 0;
+    opacity: 0.1;
+    position: absolute;
+    right: 0;
+    top: -1000px;
+    transition: opacity 0.6s ease-in-out;
+    z-index: 99;
+    &.Active {
+      bottom: 0;
+      opacity: 1;
+      @media #{$media-xxs} {
+        // Offset for nav bar at top
+        top: 53px;
+      }
+      @media #{$media-sm} {
+        top: 85px;
       }
     }
   }

@@ -75,10 +75,14 @@ Grid = React.createClass({
     $.get '/spotify/top_tracks', ((resp) ->
       @setState({ tracks: resp })).bind(this)
   componentDidMount: ->
-    setTimeout((->
-      console.log('Showing track details')
-      $('.TrackDetails').css('bottom', '0px')
-    ), 900)
+    showTrackDetails = ->
+      setTimeout((->
+        $tds = $('.TrackDetails')
+        if $tds.length > 0
+          $tds.css('bottom', '0px')
+        else showTrackDetails()
+      ), 900)
+    showTrackDetails()
   render: ->
     coverGrid = @state.tracks.map((track) -> GridBox({ track: track })
     )
@@ -87,16 +91,36 @@ Grid = React.createClass({
       id: 'coverGrid'
       children: coverGrid
 })
+
+Search = React.createClass({
+  render: ->
+    React.DOM.section
+      className: if @props.isSearching then 'Active' else ''
+      id: 'searchView'
+      children: [
+        React.DOM.h1
+          children: 'Search'
+        React.DOM.button
+          className: 'InvisibleButton'
+          onClick: @props.dismissSearch
+          children:
+            React.DOM.i
+              className: 'fa fa-times'
+      ]
+})
 Homepage = React.createClass({
   getInitialState: ->
     { isSearching: false }
   startSearch: ->
     @setState({ isSearching: true })
+  endSearch: ->
+    @setState({ isSearching: false })
   render: ->
     React.DOM.div
       children: [
         Navbar({ startSearch: @startSearch })
         Grid({ isSearching: @state.isSearching })
+        Search({ isSearching: @state.isSearching, dismissSearch: @endSearch })
       ]
 })
 React.renderComponent(Homepage(), document.getElementById('content'))
