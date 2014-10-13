@@ -116,12 +116,31 @@ SearchResults = React.createClass({
           className: 'SearchResult'
           children: [
             React.DOM.img
+              className: 'SearchResultCover'
+              width: '64'
+              height: '64'
               src: res.cover
-            React.DOM.p
-              children: res.name
+            React.DOM.div
+              className: 'SearchResultDetails'
+              children: [
+                React.DOM.h2
+                  className: 'SearchResultName'
+                  children: res.name
+                React.DOM.p
+                  className: 'SearchResultAlbumArtist'
+                  children: [
+                    React.DOM.strong
+                      children: res.artist 
+                    React.DOM.span
+                      children: ' | ' 
+                    React.DOM.strong
+                      children: res.albumName
+                  ]
+              ]
           ]
       )
       results = React.DOM.ol
+        id: 'resultsList'
         children: children
     React.DOM.section
       id: 'searchResults'
@@ -171,7 +190,7 @@ Search = React.createClass({
               onKeyUp: @search
               placeholder: 'Find a song'
               autoComplete: 'off'
-            SearchResults({ results: [] })
+            SearchResults({ results: @state.results })
           ]
       ]
 })

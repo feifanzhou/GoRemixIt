@@ -51,7 +51,7 @@ module.exports.search = (req, res) ->
       # FIXME — Sort by popularity
       body = Buffer.concat(bodyChunks)
       data = JSON.parse(body)
-      items = data.tracks.items
+      items = if data.tracks then data.tracks.items else []
       response = items.map((item) ->
         artistName = ''
         artistName += (artist.name + ', ') for artist in item.artists
@@ -60,7 +60,7 @@ module.exports.search = (req, res) ->
           id: item.id
           name: item.name
           popularity: item.popularity
-          cover: item.album.images[1].url
+          cover: item.album.images[2].url
           albumName: item.album.name
           artist: artistName
         }

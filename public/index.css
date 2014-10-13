@@ -168,3 +168,30 @@ html, body {
       #content #searchView #searchBody #searchResults #searchResultsSearching > span {
         display: inline-block;
         margin-right: 0.5em; }
+      #content #searchView #searchBody #searchResults #resultsList {
+        list-style: none;
+        padding-left: 0; }
+        #content #searchView #searchBody #searchResults #resultsList .SearchResult {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 1em 0;
+          transition: background 0.25s ease-in-out; }
+          #content #searchView #searchBody #searchResults #resultsList .SearchResult:hover {
+            background: rgba(255, 255, 255, 0.1); }
+          #content #searchView #searchBody #searchResults #resultsList .SearchResult .SearchResultCover {
+            display: inline-block;
+            margin: 0 1em;
+            vertical-align: middle; }
+          #content #searchView #searchBody #searchResults #resultsList .SearchResult .SearchResultDetails {
+            display: inline-block;
+            vertical-align: middle; }
+            #content #searchView #searchBody #searchResults #resultsList .SearchResult .SearchResultDetails .SearchResultName {
+              font-size: 2em;
+              font-weight: 300;
+              margin: 0 0 0.2em 0; }
+            #content #searchView #searchBody #searchResults #resultsList .SearchResult .SearchResultDetails .SearchResultAlbumArtist {
+              color: rgba(255, 255, 255, 0.7);
+              font-size: 1em;
+              font-weight: 400;
+              margin: 0; }
+              #content #searchView #searchBody #searchResults #resultsList .SearchResult .SearchResultDetails .SearchResultAlbumArtist > strong {
+                font-weight: 700; }
