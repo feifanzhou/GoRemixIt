@@ -95,11 +95,21 @@ Grid = React.createClass({
 SearchResults = React.createClass({
   render: ->
     if @props.results == null
-      return React.DOM.p
-        children: 'Null results'
+      results = React.DOM.p
+        children: ''
+    else if @props.results == undefined
+      results = React.DOM.h1
+        id: 'searchResultsSearching'
+        children: [
+          React.DOM.span
+            children: 'Searching'
+          React.DOM.i
+            className: 'fa fa-spin fa-spinner'
+        ]
     else if @props.results.length == 0
-      return React.DOM.p
-        children: 'No results'
+      results = React.DOM.h1
+        id: 'searchResultsNone'
+        children: 'No results found'
     else
       children = @props.results.map((res) ->
         React.DOM.li
@@ -111,8 +121,11 @@ SearchResults = React.createClass({
               children: res.name
           ]
       )
-      return React.DOM.ol
+      results = React.DOM.ol
         children: children
+    React.DOM.section
+      id: 'searchResults'
+      children: results
 })
 Search = React.createClass({
   _lastKeyDown: Date.now()
@@ -135,6 +148,7 @@ Search = React.createClass({
     query = encodeURIComponent(query).replace(/%20/g, '+')
     @._lastKeyDown = Date.now()
     @sendSearch(query)
+    @setState({ results: undefined })
   render: ->
     React.DOM.section
       className: if @props.isSearching then 'Active' else ''
@@ -157,8 +171,8 @@ Search = React.createClass({
               onKeyUp: @search
               placeholder: 'Find a song'
               autoComplete: 'off'
+            SearchResults({ results: [] })
           ]
-        SearchResults({ results: @state.results })
       ]
 })
 Homepage = React.createClass({

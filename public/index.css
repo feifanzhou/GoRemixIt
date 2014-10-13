@@ -165,3 +165,6 @@ html, body {
         outline: none;
         padding: 0.3em;
         width: 100%; }
+      #content #searchView #searchBody #searchResults #searchResultsSearching > span {
+        display: inline-block;
+        margin-right: 0.5em; }

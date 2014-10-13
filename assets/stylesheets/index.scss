@@ -204,6 +204,14 @@ html, body {
         padding: 0.3em;
         width: 100%;
       }
+      #searchResults {
+        #searchResultsSearching {
+          > span {
+            display: inline-block;
+            margin-right: 0.5em;
+          }
+        }
+      }
     }
   }
 }
