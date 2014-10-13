@@ -17,7 +17,7 @@ Navbar = React.createClass({
           children: 
             React.DOM.button
               className: 'InvisibleButton'
-              onClick: @props.startSearch
+              onClick: if @props.isSearching then @props.endSearch else @props.startSearch
               children: [
                 React.DOM.i
                   className: 'fa fa-search HeaderIcon'
@@ -93,24 +93,35 @@ Grid = React.createClass({
 })
 
 Search = React.createClass({
+  componentDidMount: ->
+    @refs.searchField.getDOMNode().focus()
   render: ->
     React.DOM.section
       className: if @props.isSearching then 'Active' else ''
       id: 'searchView'
       children: [
-        React.DOM.h1
-          children: 'Search'
         React.DOM.button
           className: 'InvisibleButton'
+          id: 'dismissSearch'
           onClick: @props.dismissSearch
           children:
             React.DOM.i
               className: 'fa fa-times'
+        React.DOM.main
+          id: 'searchBody'
+          children: [
+            React.DOM.input
+              type: 'text'
+              id: 'searchField'
+              ref: 'searchField'
+              placeholder: 'Find a song'
+              autocomplete: 'off'
+          ]
       ]
 })
 Homepage = React.createClass({
   getInitialState: ->
-    { isSearching: false }
+    { isSearching: true }
   startSearch: ->
     @setState({ isSearching: true })
   endSearch: ->
@@ -118,7 +129,7 @@ Homepage = React.createClass({
   render: ->
     React.DOM.div
       children: [
-        Navbar({ startSearch: @startSearch })
+        Navbar({ isSearching: @state.isSearching, startSearch: @startSearch, endSearch: @endSearch })
         Grid({ isSearching: @state.isSearching })
         Search({ isSearching: @state.isSearching, dismissSearch: @endSearch })
       ]
