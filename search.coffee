@@ -52,10 +52,20 @@ module.exports.search = (req, res) ->
       body = Buffer.concat(bodyChunks)
       data = JSON.parse(body)
       items = data.tracks.items
-      ids = items.map((item) ->
-        return item.id
+      response = items.map((item) ->
+        artistName = ''
+        artistName += (artist.name + ', ') for artist in item.artists
+        artistName = artistName.slice(0, -2)
+        return {
+          id: item.id
+          name: item.name
+          popularity: item.popularity
+          cover: item.album.images[1].url
+          albumName: item.album.name
+          artist: artistName
+        }
       )
-      spotifyResults = ids
+      spotifyResults = response
       respond(res)
     )
   )

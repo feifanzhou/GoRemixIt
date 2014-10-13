@@ -92,9 +92,49 @@ Grid = React.createClass({
       children: coverGrid
 })
 
+SearchResults = React.createClass({
+  render: ->
+    if @props.results == null
+      return React.DOM.p
+        children: 'Null results'
+    else if @props.results.length == 0
+      return React.DOM.p
+        children: 'No results'
+    else
+      children = @props.results.map((res) ->
+        React.DOM.li
+          className: 'SearchResult'
+          children: [
+            React.DOM.img
+              src: res.cover
+            React.DOM.p
+              children: res.name
+          ]
+      )
+      return React.DOM.ol
+        children: children
+})
 Search = React.createClass({
+  _lastKeyDown: Date.now()
+  getInitialState: ->
+    return { results: null }
   componentDidMount: ->
     @refs.searchField.getDOMNode().focus()
+  sendSearch: (q) ->
+    setTimeout((->
+      now = Date.now()
+      keyDownTime = @._lastKeyDown
+      diff = now - keyDownTime
+      if diff < 500
+        return
+      $.get ('/search?q=' + q), ((resp) ->
+        @setState({ results: resp.spotify })).bind(this)
+    ).bind(this), 550)  # Additional delay to compensate for rounding errors etc
+  search: ->
+    query = @refs.searchField.getDOMNode().value
+    query = encodeURIComponent(query).replace(/%20/g, '+')
+    @._lastKeyDown = Date.now()
+    @sendSearch(query)
   render: ->
     React.DOM.section
       className: if @props.isSearching then 'Active' else ''
@@ -114,9 +154,11 @@ Search = React.createClass({
               type: 'text'
               id: 'searchField'
               ref: 'searchField'
+              onKeyUp: @search
               placeholder: 'Find a song'
-              autocomplete: 'off'
+              autoComplete: 'off'
           ]
+        SearchResults({ results: @state.results })
       ]
 })
 Homepage = React.createClass({
