@@ -60,9 +60,12 @@ module.exports.search = (req, res) ->
           id: item.id
           name: item.name
           popularity: item.popularity
-          cover: item.album.images[2].url
+          cover300: item.album.images[1].url
+          cover64: item.album.images[2].url
           albumName: item.album.name
+          albumURL: item.album.external_urls.spotify
           artist: artistName
+          artistURL: item.artists[0].external_urls.spotify
         }
       )
       spotifyResults = response

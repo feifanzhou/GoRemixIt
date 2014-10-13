@@ -92,6 +92,41 @@ Grid = React.createClass({
       children: coverGrid
 })
 
+ResultDetails = React.createClass({
+  render: ->
+    if @props.result == null
+      return React.DOM.section
+        id: 'resultDetails'
+        children: 'Nothing selected'
+    else
+      return React.DOM.section
+        id: 'resultDetails'
+        children: [
+          React.DOM.img
+            id: 'resultLargeCover'
+            src: @props.result.cover300
+          React.DOM.h2
+            id: 'resultTitle'
+            children: @props.result.name
+          React.DOM.p
+            id: 'resultArtistAndAlbum'
+            children: [
+              React.DOM.a
+                id: 'resultArtistLink'
+                href: @props.result.artistURL
+                children: @props.result.artist
+              React.DOM.span
+                children: ' on '
+              React.DOM.a
+                id: 'resultAlbumLink'
+                href: @props.result.albumURL
+                children: @props.result.albumName
+            ]
+          React.DOM.h1
+            id: 'resultRemixesHeader'
+            children: 'Remixes'
+        ]
+})
 SearchResults = React.createClass({
   render: ->
     if @props.results == null
@@ -111,15 +146,17 @@ SearchResults = React.createClass({
         id: 'searchResultsNone'
         children: 'No results found'
     else
-      children = @props.results.map((res) ->
+      children = @props.results.map(((res, index) ->
         React.DOM.li
           className: 'SearchResult'
+          'data-index': index
+          onClick: @props.expandResult
           children: [
             React.DOM.img
               className: 'SearchResultCover'
               width: '64'
               height: '64'
-              src: res.cover
+              src: res.cover64
             React.DOM.div
               className: 'SearchResultDetails'
               children: [
@@ -138,7 +175,7 @@ SearchResults = React.createClass({
                   ]
               ]
           ]
-      )
+      ).bind(this))
       results = React.DOM.ol
         id: 'resultsList'
         children: children
@@ -149,7 +186,7 @@ SearchResults = React.createClass({
 Search = React.createClass({
   _lastKeyDown: Date.now()
   getInitialState: ->
-    return { results: null }
+    return { results: null, selectedResult: null }
   componentDidMount: ->
     @refs.searchField.getDOMNode().focus()
   sendSearch: (q) ->
@@ -168,6 +205,11 @@ Search = React.createClass({
     @._lastKeyDown = Date.now()
     @sendSearch(query)
     @setState({ results: undefined })
+  expandResult: (e) ->
+    return if !Array.isArray(@state.results)
+    index = parseInt(e.target.getAttribute('data-index'), 10)
+    result = @state.results[index]
+    @setState({ selectedResult: result })
   render: ->
     React.DOM.section
       className: if @props.isSearching then 'Active' else ''
@@ -190,7 +232,12 @@ Search = React.createClass({
               onKeyUp: @search
               placeholder: 'Find a song'
               autoComplete: 'off'
-            SearchResults({ results: @state.results })
+            React.DOM.section
+              id: 'results'
+              children: [ # Order is important for float/overflow trick
+                ResultDetails({ result: @state.selectedResult })
+                SearchResults({ results: @state.results, expandResult: @expandResult })
+              ]
           ]
       ]
 })

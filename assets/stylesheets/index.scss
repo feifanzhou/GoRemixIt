@@ -204,46 +204,80 @@ html, body {
         padding: 0.3em;
         width: 100%;
       }
-      #searchResults {
-        #searchResultsSearching {
-          > span {
-            display: inline-block;
-            margin-right: 0.5em;
+      #results {
+        #searchResults {
+          overflow: hidden;
+          padding-right: 1em;
+          width: auto;
+          #searchResultsSearching {
+            > span {
+              display: inline-block;
+              margin-right: 0.5em;
+            }
           }
-        }
-        #resultsList {
-          list-style: none;
-          padding-left: 0;
-          .SearchResult {
-            border-bottom: 1px solid transparentize(white, 0.7);
-            padding: 1em 0;
-            transition: background 0.25s ease-in-out;
-            &:hover {
-              background: transparentize(white, 0.9);
-            }
-            .SearchResultCover {
-              display: inline-block;
-              margin: 0 1em;
-              vertical-align: middle;
-            }
-            .SearchResultDetails {
-              display: inline-block;
-              vertical-align: middle;
-              .SearchResultName {
-                font-size: 2em;
-                font-weight: 300;
-                margin: 0 0 0.2em 0;
+          #resultsList {
+            list-style: none;
+            padding-left: 0;
+            .SearchResult {
+              border-bottom: 1px solid transparentize(white, 0.7);
+              padding: 1em 0;
+              transition: background 0.25s ease-in-out;
+              &:hover {
+                background: transparentize(white, 0.9);
               }
-              .SearchResultAlbumArtist {
-                color: transparentize(white, 0.3);
-                font-size: 1em;
-                font-weight: 400;
-                margin: 0;
-                > strong {
-                  font-weight: 700;
+              .SearchResultCover {
+                display: inline-block;
+                margin: 0 1em;
+                vertical-align: middle;
+              }
+              .SearchResultDetails {
+                display: inline-block;
+                vertical-align: middle;
+                .SearchResultName {
+                  font-size: 2em;
+                  font-weight: 300;
+                  margin: 0 0 0.2em 0;
+                }
+                .SearchResultAlbumArtist {
+                  color: transparentize(white, 0.3);
+                  font-size: 1em;
+                  font-weight: 400;
+                  margin: 0;
+                  > strong {
+                    font-weight: 700;
+                  }
                 }
               }
             }
+          }
+        }
+        #resultDetails {
+          color: white;
+          float: right;
+          margin-top: 1em;
+          width: 320px;
+          #resultLargeCover {
+            width: 100%;
+          }
+          #resultTitle {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 0.5em 0;
+            text-align: center;
+          }
+          #resultArtistAndAlbum {
+            font-weight: 300;
+            margin: 0;
+            text-align: center;
+            > a {
+              color: white;
+              font-size: 0.85em;
+              font-weight: 700;
+              text-decoration: none;
+            }
+          }
+          #resultRemixesHeader {
+            font-weight: 300;
           }
         }
       }
