@@ -99,6 +99,7 @@ ResultDetails = React.createClass({
         id: 'resultDetails'
         children: 'Nothing selected'
     else
+      console.log('Result: ' + JSON.stringify(@props.result))
       return React.DOM.section
         id: 'resultDetails'
         children: [
@@ -196,18 +197,18 @@ Search = React.createClass({
       diff = now - keyDownTime
       if diff < 500
         return
-      $.get ('/search?q=' + q), ((resp) ->
-        @setState({ results: resp.spotify })).bind(this)
+      $.get ('/spotify/search?q=' + q), ((resp) ->
+        @setState({ results: resp })).bind(this)
     ).bind(this), 550)  # Additional delay to compensate for rounding errors etc
   search: ->
     query = @refs.searchField.getDOMNode().value
     query = encodeURIComponent(query).replace(/%20/g, '+')
     @._lastKeyDown = Date.now()
     @sendSearch(query)
-    @setState({ results: undefined })
+    @setState({ results: undefined, selectedResult: null })
   expandResult: (e) ->
     return if !Array.isArray(@state.results)
-    index = parseInt(e.target.getAttribute('data-index'), 10)
+    index = parseInt(e.currentTarget.getAttribute('data-index'), 10)
     result = @state.results[index]
     @setState({ selectedResult: result })
   render: ->

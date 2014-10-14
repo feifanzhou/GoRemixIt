@@ -7,6 +7,7 @@ sass = require('node-sass')
 config = require('./config')
 
 search = require('./search')
+soundcloud = require('./soundcloud')
 spotify = require('./spotify')
 
 # ==============================
@@ -18,9 +19,12 @@ router
     return
 
 router
-  .route('/search')
-  .get search.search
+  .route('/soundcloud/search')
+  .get soundcloud.search
 
+router
+  .route('/spotify/search')
+  .get spotify.search
 router
   .route('/spotify/top_tracks')
   .get spotify.topTracks
