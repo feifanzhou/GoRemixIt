@@ -6,7 +6,6 @@ coffeeMiddleware = require('coffee-middleware')
 sass = require('node-sass')
 config = require('./config')
 
-search = require('./search')
 soundcloud = require('./soundcloud')
 spotify = require('./spotify')
 

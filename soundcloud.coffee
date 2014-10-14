@@ -6,7 +6,7 @@ module.exports.search = (req, res) ->
   path = 'https://api.soundcloud.com/tracks.json?client_id=' + VARS.soundcloud_client_id + '&q=' + req.query.q
   searchReq = https.get(path, (searchRes) ->
     # FIXME — Handle various status codes
-    console.log('STATUS: ' + searchRes.statusCode)
+    console.log('Soundcloud STATUS: ' + searchRes.statusCode)
     bodyChunks = []
     searchRes.on('data', (chunk) ->
       bodyChunks.push(chunk)

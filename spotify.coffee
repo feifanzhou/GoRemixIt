@@ -32,7 +32,7 @@ module.exports.search = (req, res) ->
   path = 'https://api.spotify.com/v1/search?type=artist,track&limit=5&q=' + req.query.q
   searchReq = https.get(path, (searchRes) ->
     # FIXME — Handle various status codes
-    console.log('STATUS: ' + searchRes.statusCode)
+    console.log('Spotify STATUS: ' + searchRes.statusCode)
     bodyChunks = []
     searchRes.on('data', (chunk) ->
       bodyChunks.push(chunk)

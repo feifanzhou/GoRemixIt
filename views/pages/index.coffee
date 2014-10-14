@@ -99,7 +99,6 @@ ResultDetails = React.createClass({
         id: 'resultDetails'
         children: 'Nothing selected'
     else
-      console.log('Result: ' + JSON.stringify(@props.result))
       return React.DOM.section
         id: 'resultDetails'
         children: [
@@ -126,6 +125,8 @@ ResultDetails = React.createClass({
           React.DOM.h1
             id: 'resultRemixesHeader'
             children: 'Remixes'
+          React.DOM.p
+            children: JSON.stringify(@props.remixes)
         ]
 })
 SearchResults = React.createClass({
@@ -187,9 +188,18 @@ SearchResults = React.createClass({
 Search = React.createClass({
   _lastKeyDown: Date.now()
   getInitialState: ->
-    return { results: null, selectedResult: null }
+    return { results: null, selectedResult: null, selectedIndex: undefined, remixes: [] }
   componentDidMount: ->
     @refs.searchField.getDOMNode().focus()
+  getRemixes: (results) ->
+    return if results == null || results == undefined || results.length < 1
+    _t = this
+    results.forEach((result, index) ->    # FIXME: Batch search result
+      $.get ('/soundcloud/search?q=' + result.artist + ' ' + result.name), (resp) ->  # FIXME: Handle names with commas correctly
+        rem = _t.state.remixes
+        rem[index] = resp
+        _t.setState({ remixes: rem })
+    )      
   sendSearch: (q) ->
     setTimeout((->
       now = Date.now()
@@ -198,7 +208,9 @@ Search = React.createClass({
       if diff < 500
         return
       $.get ('/spotify/search?q=' + q), ((resp) ->
-        @setState({ results: resp })).bind(this)
+        @setState({ results: resp })
+        @getRemixes(resp)
+      ).bind(this)
     ).bind(this), 550)  # Additional delay to compensate for rounding errors etc
   search: ->
     query = @refs.searchField.getDOMNode().value
@@ -210,8 +222,9 @@ Search = React.createClass({
     return if !Array.isArray(@state.results)
     index = parseInt(e.currentTarget.getAttribute('data-index'), 10)
     result = @state.results[index]
-    @setState({ selectedResult: result })
+    @setState({ selectedResult: result, selectedIndex: index })
   render: ->
+    remixes = if @state.selectedIndex >= 0 then @state.remixes[@state.selectedIndex] else null
     React.DOM.section
       className: if @props.isSearching then 'Active' else ''
       id: 'searchView'
@@ -236,7 +249,7 @@ Search = React.createClass({
             React.DOM.section
               id: 'results'
               children: [ # Order is important for float/overflow trick
-                ResultDetails({ result: @state.selectedResult })
+                ResultDetails({ result: @state.selectedResult, remixes: remixes })
                 SearchResults({ results: @state.results, expandResult: @expandResult })
               ]
           ]
