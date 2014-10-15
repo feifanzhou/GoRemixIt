@@ -92,6 +92,30 @@ Grid = React.createClass({
       children: coverGrid
 })
 
+RemixBanner = React.createClass({
+  render: ->
+    React.DOM.div
+      className: 'RemixBanner'
+      style: {
+        backgroundImage: 'url(' + @props.remix.cover + ')'
+      }
+      children: [
+        React.DOM.div
+          className: 'RemixDarken'
+        React.DOM.h3
+          className: 'RemixName'
+          children: @props.remix.name
+        React.DOM.p
+          className: 'RemixArtist'
+          children: [
+            React.DOM.span
+              children: 'by '
+            React.DOM.a
+              href: @props.remix.artistURL
+              children: @props.remix.artist
+          ]
+      ]
+})
 ResultDetails = React.createClass({
   render: ->
     if @props.result == null
@@ -99,6 +123,7 @@ ResultDetails = React.createClass({
         id: 'resultDetails'
         children: 'Nothing selected'
     else
+      banners = if @props.remixes then @props.remixes.map((remix) -> RemixBanner({ remix: remix })) else []
       return React.DOM.section
         id: 'resultDetails'
         children: [
@@ -125,8 +150,8 @@ ResultDetails = React.createClass({
           React.DOM.h1
             id: 'resultRemixesHeader'
             children: 'Remixes'
-          React.DOM.p
-            children: JSON.stringify(@props.remixes)
+          React.DOM.section
+            children: banners
         ]
 })
 SearchResults = React.createClass({
@@ -223,6 +248,10 @@ Search = React.createClass({
     index = parseInt(e.currentTarget.getAttribute('data-index'), 10)
     result = @state.results[index]
     @setState({ selectedResult: result, selectedIndex: index })
+  hideSearch: ->
+    @setState({ results: null, selectedResult: null, selectedIndex: undefined, remixes: [] })
+    @refs.searchField.getDOMNode().value = ''
+    @props.dismissSearch()
   render: ->
     remixes = if @state.selectedIndex >= 0 then @state.remixes[@state.selectedIndex] else null
     React.DOM.section
@@ -232,7 +261,7 @@ Search = React.createClass({
         React.DOM.button
           className: 'InvisibleButton'
           id: 'dismissSearch'
-          onClick: @props.dismissSearch
+          onClick: @hideSearch
           children:
             React.DOM.i
               className: 'fa fa-times'

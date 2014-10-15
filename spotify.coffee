@@ -39,24 +39,27 @@ module.exports.search = (req, res) ->
     ).on('end', ->
       # FIXME — Sort by popularity
       body = Buffer.concat(bodyChunks)
-      data = JSON.parse(body)
-      items = if data.tracks then data.tracks.items else []
-      response = items.map((item) ->
-        artistName = ''
-        artistName += (artist.name + ', ') for artist in item.artists
-        artistName = artistName.slice(0, -2)
-        return {
-          id: item.id
-          name: item.name
-          popularity: item.popularity
-          cover300: item.album.images[1].url
-          cover64: item.album.images[2].url
-          albumName: item.album.name
-          albumURL: item.album.external_urls.spotify
-          artist: artistName
-          artistURL: item.artists[0].external_urls.spotify
-        }
-      )
+      if searchRes.statusCode != 200
+        response = []
+      else
+        data = JSON.parse(body)
+        items = if data.tracks then data.tracks.items else []
+        response = items.map((item) ->
+          artistName = ''
+          artistName += (artist.name + ', ') for artist in item.artists
+          artistName = artistName.slice(0, -2)
+          return {
+            id: item.id
+            name: item.name
+            popularity: item.popularity
+            cover300: item.album.images[1].url
+            cover64: item.album.images[2].url
+            albumName: item.album.name
+            albumURL: item.album.external_urls.spotify
+            artist: artistName
+            artistURL: item.artists[0].external_urls.spotify
+          }
+        )
       res.setHeader('Content-Type', 'application/json')
       res.json(response)
     )

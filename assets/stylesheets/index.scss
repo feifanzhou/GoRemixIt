@@ -279,6 +279,36 @@ html, body {
           #resultRemixesHeader {
             font-weight: 300;
           }
+          .RemixBanner {
+            background-position: center center;
+            background-size: cover;
+            margin: 1em auto;
+            position: relative;
+            padding: 2em 1em 0.2em 1em;
+            .RemixDarken {
+              background: transparentize(black, 0.6);
+              bottom: 0;
+              left: 0;
+              position: absolute;
+              right: 0;
+              top: 0;
+            }
+            .RemixName {
+              font-weight: 300;
+              margin-bottom: 0.3em;
+              position: relative;
+            }
+            .RemixArtist {
+              font-weight: 300;
+              margin-top: 0;
+              position: relative;
+              a {
+                color: white;
+                font-weight: 700;
+                text-decoration: none;
+              }
+            }
+          }
         }
       }
     }
