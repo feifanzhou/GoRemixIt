@@ -4,7 +4,15 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="index.css">
 <div id='content'></div>
+<div id='soundcloudClientID'><%= soundcloud_client_id %></div>
 <script src="http://fb.me/react-0.11.2.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//connect.soundcloud.com/sdk.js"></script>
+<script>
+  SC.initialize({
+    client_id: document.getElementById('soundcloudClientID').innerHTML,
+    redirect_uri: "http://example.com/callback.html"
+  });
+</script>
 <script type="text/javascript" src="/index.js"></script>
 <% include layouts/tail %>

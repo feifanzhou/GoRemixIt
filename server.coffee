@@ -5,6 +5,7 @@ response_time = require('response-time')
 coffeeMiddleware = require('coffee-middleware')
 sass = require('node-sass')
 config = require('./config')
+vars = require('./vars')
 
 soundcloud = require('./soundcloud')
 spotify = require('./spotify')
@@ -14,7 +15,7 @@ spotify = require('./spotify')
 router
   .route('/')
   .get (req, res) -> 
-    res.render('index')
+    res.render('index', { soundcloud_client_id: vars.soundcloud_client_id })
     return
 
 router
